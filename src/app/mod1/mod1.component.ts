@@ -34,11 +34,17 @@ export class Mod1Component implements OnInit {
     //использовали FormBuilder для создания объекта и передаем в него значения
     //другой способ записи new FormGroup
     this.formBuilder1 = fb.group({
-      name: [''],
-      description: fb.control(''),
+      name: [null, Validators.required],
+      description: fb.control(null, Validators.required),
       //две строки сверху то же самое. можно и так, и так
+      title: [{ value: null, disabled: true }, Validators.required],
       phones: fb.array([['+79897201120'], ['+79897201220'], ['+79897201320']]),
       age: fb.control(null, [Validators.min(10), Validators.max(100)]),
+    });
+    this.formBuilder1.get('name').valueChanges.subscribe((value) => {
+      if (value === 'Привет') {
+        this.formBuilder1.get('description').setValue('Приветствие');
+      }
     });
   }
 
@@ -50,5 +56,16 @@ export class Mod1Component implements OnInit {
 
   get getAge(): FormControl {
     return this.formBuilder1.get('age') as FormControl;
+  }
+
+  toggle() {
+    if (this.formBuilder1.get('title').enabled) {
+      this.formBuilder1.get('title').disable();
+    } else {
+      this.formBuilder1.get('title').enable();
+    }
+  }
+  refresh() {
+    this.formBuilder1.reset();
   }
 }

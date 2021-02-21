@@ -60,25 +60,67 @@
 
 <form [formGroup]="formBuilder1">
   <p>
-    <label>name</label>
+    <label>Имя</label>
     <input type="text" name="name" formControlName="name" />
+    <br />
+    <span *ngIf="formBuilder1.get('name').dirty">Поле было изменено</span>
+    <span *ngIf="formBuilder1.get('name').pristine"
+      >Не было введено ни одного символа</span
+    >
+    <br />
+
+    <span *ngIf="formBuilder1.get('name').valid">Заполнено</span>
+    <span *ngIf="formBuilder1.get('name').invalid"
+      >Необходимо заполнить поле</span
+    >
+    <br />
+    <code>{{ formBuilder1.get("name").status }}</code>
   </p>
 
   <p>
-    <label>description</label>
+    <label>Описание</label>
     <input type="text" formControlName="description" />
+    <span *ngIf="formBuilder1.get('description').touched"
+      >С полем было взаимодействие</span
+    >
+    <span *ngIf="formBuilder1.get('description').untouched"
+      >С полем не было взаимодействия</span
+    >
+    <br />
+    <span *ngIf="formBuilder1.get('description').valid">Заполнено</span>
+    <span *ngIf="formBuilder1.get('description').invalid"
+      >Необходимо заполнить поле</span
+    >
     <!-- в случае с реактивными формами атрибут name у инпута можно не указывать -->
   </p>
 
   <p>
-    <label>age</label>
+    <label>Возраст</label>
     <input type="number" formControlName="age" />
     <br />
-    <span *ngIf="getAge.getError('min')">Поле не может быть меньше {{ getAge.getError('min').min }}</span>
+    <span *ngIf="getAge.getError('min')"
+      >Поле не может быть меньше {{ getAge.getError("min").min }}</span
+    >
+    <span *ngIf="getAge.getError('max')"
+      >Поле не может быть меньше {{ getAge.getError("max").max }}</span
+    >
     <br />
     <code>age errors {{ getAge.errors | json }}</code>
     <!-- в случае с реактивными формами атрибут name у инпута можно не указывать -->
   </p>
+
+  <p>
+    <label>Title</label>
+    <input type="text" name="title" formControlName="title" />
+    <br />
+    <code>{{ formBuilder1.get("title").status }}</code>
+    <br />
+    <span *ngIf="formBuilder1.get('title').disabled">Активно</span>
+    <span *ngIf="formBuilder1.get('title').enabled">Неактивно</span>
+    <br />
+    <button (click)="toggle()">D/E</button>
+  </p>
+
   <div formArrayName="phones">
     <p *ngFor="let phone of getPhones.controls; let i = index">
       <!-- <label>{{ phone.value }}</label> -->
@@ -86,6 +128,6 @@
       <input type="text" [formControlName]="i" />
     </p>
   </div>
-
+  <button (click)="refresh()">Refresh</button>
   <pre>name{{ formBuilder1.value | json }}</pre>
 </form>
