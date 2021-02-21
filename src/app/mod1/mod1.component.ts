@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-mod1',
@@ -22,7 +28,7 @@ export class Mod1Component implements OnInit {
 
   formBuilder1: FormGroup;
 
-  //в конструктр передается описание классов которые по принципу депенденси инжектионс 
+  //в конструктр передается описание классов которые по принципу депенденси инжектионс
 
   constructor(fb: FormBuilder) {
     //использовали FormBuilder для создания объекта и передаем в него значения
@@ -32,6 +38,7 @@ export class Mod1Component implements OnInit {
       description: fb.control(''),
       //две строки сверху то же самое. можно и так, и так
       phones: fb.array([['+79897201120'], ['+79897201220'], ['+79897201320']]),
+      age: fb.control(null, [Validators.min(10), Validators.max(100)]),
     });
   }
 
@@ -39,5 +46,9 @@ export class Mod1Component implements OnInit {
 
   get getPhones(): FormArray {
     return this.formBuilder1.get('phones') as FormArray;
+  }
+
+  get getAge(): FormControl {
+    return this.formBuilder1.get('age') as FormControl;
   }
 }

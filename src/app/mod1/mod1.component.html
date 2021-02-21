@@ -69,9 +69,20 @@
     <input type="text" formControlName="description" />
     <!-- в случае с реактивными формами атрибут name у инпута можно не указывать -->
   </p>
+
+  <p>
+    <label>age</label>
+    <input type="number" formControlName="age" />
+    <br />
+    <span *ngIf="getAge.getError('min')">Поле не может быть меньше {{ getAge.getError('min').min }}</span>
+    <br />
+    <code>age errors {{ getAge.errors | json }}</code>
+    <!-- в случае с реактивными формами атрибут name у инпута можно не указывать -->
+  </p>
   <div formArrayName="phones">
     <p *ngFor="let phone of getPhones.controls; let i = index">
-      <label>{{ phone.value }}</label>
+      <!-- <label>{{ phone.value }}</label> -->
+      <label>{{ i }}</label>
       <input type="text" [formControlName]="i" />
     </p>
   </div>
