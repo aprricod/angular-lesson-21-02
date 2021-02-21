@@ -6,15 +6,9 @@ import { Mod1Module } from './mod1/mod1.module';
 import { Mod2Module } from './mod2/mod2.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    Mod1Module,
-    Mod2Module
-  ],
+  declarations: [AppComponent],
+  imports: [BrowserModule, Mod1Module, Mod2Module],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

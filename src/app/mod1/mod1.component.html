@@ -1,1 +1,80 @@
-<p>mod1 works!</p>
+<p>Поведение в объекте</p>
+
+<div>
+  <p>
+    <label>name</label>
+    <input type="text" [(ngModel)]="form1.name" />
+    {{ form1.name }}
+  </p>
+  <p>
+    <label>description</label>
+    <input type="text" [(ngModel)]="form1.description" />
+    {{ form1.description }}
+  </p>
+</div>
+<div>name{{ form1.name }}</div>
+<div>description{{ form1.description }}</div>
+<hr />
+
+<p>Поведение в форме</p>
+
+<form #myForm1="ngForm">
+  <!--ngForm это директива -->
+  <p>
+    <label>name</label>
+    <input type="text" name="name" [(ngModel)]="name" />
+    {{ name }}
+  </p>
+
+  <p>
+    <label>description</label>
+    <input type="text" name="description" [(ngModel)]="description" />
+    {{ description }}
+  </p>
+
+  <div>name{{ myForm1.value.name }}</div>
+  <div>description{{ myForm1.value.description }}</div>
+  <pre>name{{ myForm1.value | json }}</pre>
+  <!-- <pre>name{{ myForm1.control | json }}</pre> -->
+</form>
+
+<p>Поведение в реактивной форме</p>
+
+<form [formGroup]="reactivForm1">
+  <p>
+    <label>name</label>
+    <input type="text" name="name" formControlName="name" />
+    {{ reactivForm1.value.name }}
+  </p>
+
+  <p>
+    <label>description</label>
+    <input type="text" name="description" formControlName="description" />
+    {{ reactivForm1.value.description }}
+  </p>
+
+  <pre>name{{ reactivForm1.value | json }}</pre>
+</form>
+
+<p>Поведение в реактивной форме (form builder)</p>
+
+<form [formGroup]="formBuilder1">
+  <p>
+    <label>name</label>
+    <input type="text" name="name" formControlName="name" />
+  </p>
+
+  <p>
+    <label>description</label>
+    <input type="text" formControlName="description" />
+    <!-- в случае с реактивными формами атрибут name у инпута можно не указывать -->
+  </p>
+  <div formArrayName="phones">
+    <p *ngFor="let phone of getPhones.controls; let i = index">
+      <label>{{ phone.value }}</label>
+      <input type="text" [formControlName]="i" />
+    </p>
+  </div>
+
+  <pre>name{{ formBuilder1.value | json }}</pre>
+</form>
